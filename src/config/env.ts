@@ -4,11 +4,14 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-export const env = {
+const env = {
   DB_NAME: process.env.DB_NAME as string,
-  DB_USER:
-  DB_PASS:
-  DB_HOST:
-  DB_PORT:
-  JWT_SECRET:
+  DB_USER: process.env.DB_USER as string,
+  DB_PASS: process.env.DB_PASS as string,
+  DB_HOST: process.env.DB_HOST as string,
+  DB_PORT: Number(process.env.DB_PORT) || 5432,
+  PORT: Number(process.env.PORT) || 3000,
+  JWT_SECRET: process.env.JWT_SECRET as string,
 };
+
+export default env;
