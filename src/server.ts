@@ -6,7 +6,6 @@ const app = express();
 app.use(express.json());
 
 app.get("/ping", (_req, res) => {
-  console.log("server hit");
   res.json({ message: "hello server" });
 });
 
