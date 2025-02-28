@@ -1,6 +1,6 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from "@config/index";
-import User from "./userModel";
+import User from "@models/userModel";
 
 class Conversation extends Model {
   public id!: number;
