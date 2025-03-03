@@ -1,5 +1,6 @@
 import express from "express";
 import sequelize from "@config/database";
+import "@models/index";
 
 const app = express();
 
@@ -12,6 +13,11 @@ app.get("/ping", (_req, res) => {
 const startServer = async () => {
   try {
     await sequelize.authenticate();
+    console.log("✅  connected to PostgresSQL");
+
+    await sequelize.sync({ force: false });
+    console.log(" ✅  Models synced");
+
     const PORT = process.env.PORT || 3000;
     app.listen(PORT, () =>
       console.log(`🚀 Server running in  http://localhost:${PORT}`)
