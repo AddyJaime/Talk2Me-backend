@@ -1,9 +1,28 @@
 version: "3.8"
 
 services:
-  db:
-    image: postgres:15
-    container_name: talk2me-db
+  #backend
+  backend:
+    hostname: backend
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    command: npm run dev
+    ports:
+      - 3000:3000
+    networks:
+      - main_network
+
+  postgres:
+    image: postgres:alpine
+    container_name: postgres
     restart: always
     environment:
       POSTGRES_USER: postgres
@@ -12,7 +31,9 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - ./pgdata:/var/lib/postgresql/data
+    networks:
+      - main_network
 
-volumes:
-  pgdata:
+networks:
+  main_network:

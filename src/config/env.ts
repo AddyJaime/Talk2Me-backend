@@ -1,8 +1,4 @@
-// * 🌎 Environment Variables Configuration File (env.ts)
-//  Loads environment variables from the `.env` file and exports them  as a single object for use throughout the application.
-import dotenv from "dotenv";
-
-dotenv.config();
+// aqui convertimos todos los valores de .env en valores seguros, los valores de .env siempre son strings pero en este caso convertimos los puertos en numeros
 
 const env = {
   DB_NAME: process.env.DB_NAME as string,

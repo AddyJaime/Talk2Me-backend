@@ -26,11 +26,12 @@
 
     /* Modules */
     "module": "commonjs" /* Specify what module code is generated. */,
-    "rootDir": "./src" /* Specify the root folder within your source files. */,
     "moduleResolution": "node10" /* Specify how TypeScript looks up a file from a given module specifier. */,
+    "rootDir": "./src" /* Specify the root folder within your source files. */,
     "baseUrl": "./src",
     "paths": {
       "@models/*": ["models/*"],
+      "@constants/*": ["constants/*"],
       "@controllers/*": ["controllers/*"],
       "@routes/*": ["routes/*"],
       "@services/*": ["services/*"],

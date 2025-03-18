@@ -1,9 +1,11 @@
+import "dotenv/config";
 import express from "express";
 import sequelize from "@config/database";
 import "@models/index";
 
 const app = express();
 
+// Para poder interpreter json
 app.use(express.json());
 
 app.get("/ping", (_req, res) => {
