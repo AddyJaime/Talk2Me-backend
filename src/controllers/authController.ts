@@ -4,6 +4,7 @@ import User from "@models/userModel";
 export const register = async (req: Request, res: Response) => {
   try {
     const { fullName, email, password } = req.body;
+    console.log("creating users", { fullName, email, password });
 
     const existingCustomer = await User.findOne({ where: { email } });
     if (existingCustomer) {
@@ -19,6 +20,7 @@ export const register = async (req: Request, res: Response) => {
 
     res.status(201).json({ message: "User created succefully", user: newUser });
   } catch (error) {
+    console.error("❌ Error creating user:", error);
     res.status(500).json({ error: "Error creating user" });
   }
 };
@@ -41,6 +43,7 @@ export const login = async (req: Request, res: Response) => {
       user: { id: user.id, email: user.email },
     });
   } catch (error) {
-    res.status(500).json({ error: "Error during login" });
+    console.error("❌ Error during login:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 };

@@ -1,6 +1,7 @@
 import "dotenv/config";
 import express from "express";
 import sequelize from "@config/database";
+import authRoutes from "@routes/authRoutes";
 import "@models/index";
 
 const app = express();
@@ -8,14 +9,12 @@ const app = express();
 // Para poder interpreter json
 app.use(express.json());
 
-app.get("/ping", (_req, res) => {
-  res.json({ message: "hello server" });
-});
+app.use("/auth", authRoutes);
 
 const startServer = async () => {
   try {
     await sequelize.authenticate();
-    console.log("✅  connected to PostgresSQL");
+    console.log("✅  connected to PostgresSQL", process.env.DB_NAME);
 
     await sequelize.sync({ force: false });
     console.log(" ✅  Models synced");
