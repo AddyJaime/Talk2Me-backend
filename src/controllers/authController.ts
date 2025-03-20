@@ -1,22 +1,14 @@
 import { Request, Response } from "express";
 import User from "@models/userModel";
 
-// destrcuturar lo quev eien del fron endt para poder usarlo
-// verfiicar si existe en la base dato, si existe tnocers led digo qye ya exister
-// crear el usaruoi y indicnarle que el usuario fuec creado
-
-// para login necesito el body que seria lo que veien del front end
-// neceisto buscarlo en la base de dato y si aparece entoncs lo dejo pasar
-//  si el usaurio que esta en la base de dato no match di contrasena oincorrecta
-// verifca rque la contras esea la mis a
-
 export const register = async (req: Request, res: Response) => {
   try {
     const { fullName, email, password } = req.body;
 
     const existingCustomer = await User.findOne({ where: { email } });
     if (existingCustomer) {
-      return res.status(400).json({ message: "The email already register" });
+      res.status(400).json({ message: "The email already exist" });
+      return;
     }
 
     const newUser = await User.create({
@@ -25,11 +17,9 @@ export const register = async (req: Request, res: Response) => {
       password,
     });
 
-    return res
-      .status(201)
-      .json({ message: "User created succefully", user: newUser });
+    res.status(201).json({ message: "User created succefully", user: newUser });
   } catch (error) {
-    return res.status(500).json({ error: "Error creating user" });
+    res.status(500).json({ error: "Error creating user" });
   }
 };
 
@@ -38,13 +28,19 @@ export const login = async (req: Request, res: Response) => {
     const { email, password } = req.body;
     const user = await User.findOne({ where: { email } });
     if (!user) {
-      return res.status(400).json({ message: "Inccorect password" });
+      res.status(400).json({ message: "User not found" });
+      return;
     }
+
     if (user.password !== password) {
-      return res.status(400).json({ error: "Credenciales incorrectas" });
+      res.status(400).json({ error: "Incorrect email or password" });
+      return;
     }
-    return res.status(200).json({ message: "Login succfuelly", user });
+    res.status(200).json({
+      message: "Login successfully",
+      user: { id: user.id, email: user.email },
+    });
   } catch (error) {
-    return res.status(500).json({ error: "Error login " });
+    res.status(500).json({ error: "Error during login" });
   }
 };
