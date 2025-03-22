@@ -1,10 +1,11 @@
 import { Request, Response } from "express";
 import User from "@models/userModel";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
 
 export const register = async (req: Request, res: Response) => {
   try {
     const { fullName, email, password } = req.body;
-    console.log("creating users", { fullName, email, password });
 
     const existingCustomer = await User.findOne({ where: { email } });
     if (existingCustomer) {
@@ -12,10 +13,12 @@ export const register = async (req: Request, res: Response) => {
       return;
     }
 
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     const newUser = await User.create({
       fullName,
       email,
-      password,
+      password: hashedPassword,
     });
 
     res.status(201).json({ message: "User created succefully", user: newUser });
@@ -34,12 +37,20 @@ export const login = async (req: Request, res: Response) => {
       return;
     }
 
-    if (user.password !== password) {
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
       res.status(400).json({ error: "Incorrect email or password" });
       return;
     }
+
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET as string, {
+      expiresIn: "10d",
+    });
+
     res.status(200).json({
       message: "Login successfully",
+      token,
       user: { id: user.id, email: user.email },
     });
   } catch (error) {
