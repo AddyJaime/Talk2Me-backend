@@ -9,6 +9,7 @@ const validateSchema = (schema: ZodSchema<any>) => {
     const validation = schema.safeParse(req.body);
     if (!validation.success) {
       res.status(400).json({ error: validation.error.errors });
+      // aqui rompe y no continua si esta mal
       return;
     }
     next();
