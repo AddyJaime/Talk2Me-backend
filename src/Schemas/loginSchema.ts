@@ -1,6 +1,5 @@
 import { z } from "zod";
 
-// // aqui definimos como queremos que se vea mi esquema
 const loginSchema = z.object({
   email: z.string().email("Email is required").nonempty(),
   password: z

@@ -1,6 +1,6 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from "@config/index";
-import { Conversation, User } from "@models/index";
+import { Conversation, User } from "@models";
 
 class Chat extends Model {
   public id!: number;

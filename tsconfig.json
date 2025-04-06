@@ -30,10 +30,12 @@
     "rootDir": "./src" /* Specify the root folder within your source files. */,
     "baseUrl": "./src",
     "paths": {
-      "@models/*": ["models/*"],
+      // si quiere src com prefijo para cada import
+      "@src/*": ["*"],
+      "@models": ["models/index.ts"],
       "@constants/*": ["constants/*"],
       "@controllers/*": ["controllers/*"],
-      "@routes/*": ["routes/*"],
+      "@routes": ["routes/index.ts"],
       "@services/*": ["services/*"],
       "@utils/*": ["utils/*"],
       "@config/*": ["config/*"],

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import User from "@models/userModel";
+import { User } from "@models";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 
@@ -21,7 +21,9 @@ export const register = async (req: Request, res: Response) => {
       password: hashedPassword,
     });
 
-    res.status(201).json({ message: "User created succefully", user: newUser });
+    res
+      .status(201)
+      .json({ message: "User created succeyfully", user: newUser });
   } catch (error) {
     console.error("❌ Error creating user:", error);
     res.status(500).json({ error: "Error creating user" });

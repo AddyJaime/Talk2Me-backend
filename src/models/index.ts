@@ -1,6 +1,6 @@
-import User from "@models/userModel";
-import Conversation from "@models/conversationModel";
-import Chat from "@models/chatModel";
+import User from "./userModel";
+import Conversation from "./conversationModel";
+import Chat from "./chatModel";
 
 User.hasMany(Conversation, { foreignKey: "userOneId", as: "conversationsOne" });
 User.hasMany(Conversation, { foreignKey: "userTwoId", as: "conversationsTwo" });
