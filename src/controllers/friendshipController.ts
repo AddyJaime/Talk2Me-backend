@@ -1,0 +1,53 @@
+import { Request, Response } from "express";
+import { Friendship } from "@models";
+import { User } from "@models";
+
+
+
+export const sendFriendRequest = async (req: Request, res: Response) => {
+  try {
+
+    // aqui recibimos el email de la persona a la cual se le quiere enviar el friend request 
+    const { email } = req.body
+    // aqui el id del usuario actual ya autenticado // agregar auth
+    const currentUserId = req.user.id
+
+    // Buscar al usuario por email y si el usuario no existe manda un error, evita mandar solicutuedes a usuario que no existan en la base de dato, tienen que exisiter para mandarle request
+    const existingUser = await User.findOne({ where: { email } })
+    if (!existingUser) {
+      res.status(400).json({ message: "User not found, the user needs to be register in order to be sent a friend request" })
+      return
+    }
+
+    // evitar enviar solicituedes a uno mismo
+    if (existingUser.id === currentUserId) {
+      res.status(400).json({ message: "You cannot add yourself" })
+    }
+
+    // buscar en la tabla de friendship una relacio nentre el usuario actual y ese a wuien se le va a mandarla solitud y existe esa relacion enotnces no se la envies 
+    const alreadyExists = await Friendship.findOne({
+      where: {
+        userId: currentUserId,
+        friendId: existingUser.id
+      }
+    })
+
+    if (alreadyExists) {
+      res.status(400).json({ message: "Friend request already sent ot you are already friends" })
+    }
+
+    // si no existe entonces se crea aqui
+    const newFriendRequest = await Friendship.create({
+      userId: currentUserId,
+      friendId: existingUser.id,
+      status: "pending"
+    })
+
+    res.status(201).json({ message: "Friend request sent", friendRequest: newFriendRequest })
+
+  } catch (error) {
+    console.error("❌ Error sending new friend resquest", error)
+    res.status(500).json({ message: "Error sending new friend request" })
+
+  }
+}
