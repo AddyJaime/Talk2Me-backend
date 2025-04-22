@@ -51,3 +51,40 @@ export const sendFriendRequest = async (req: Request, res: Response) => {
 
   }
 }
+
+
+export const acceptFriendRequest = async (req: Request, res: Response) => {
+  try {
+    const currentUserId = req.user.id
+    const senderId = req.body.id
+
+    const friendRequestExist = await Friendship.findOne({
+      where: {
+        userId: senderId,
+        // aqui estoy yo como friendId
+        friendId: currentUserId,
+        status: "pending"
+
+      }
+    })
+    if (!friendRequestExist) {
+      res.status(400).json({ message: "Friend request not found or already accepted." })
+    }
+
+    if (friendRequestExist) {
+      friendRequestExist.status = "accepted"
+      await friendRequestExist.save()
+    } else {
+      res.status(400).json({ message: "Friend request not found or already accepted." })
+      return
+    }
+
+    res.status(200).json({ message: "friend request accepted succefullyt", friendRequest: friendRequestExist })
+
+  } catch (error) {
+    console.error("❌ Error accepting friend request:", error)
+    res.status(500).json({ message: "Something went wrong while accepting the request." })
+  }
+
+
+}
