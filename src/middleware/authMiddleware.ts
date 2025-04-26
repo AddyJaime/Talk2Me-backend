@@ -2,7 +2,9 @@
 // later to do para asegurarno que el usaurio tiene un token valido y que tiene permisos para poder hacer lo que le de su gana dentro de la app
 import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
-export const requireAuth = (req: Request, res: Response, next: NextFunction): void => {
+// import { AuthRequest } from "@src/types/AuthRequest";
+// import { Request } from "express";
+export const requireAuth = (req: Request, res: Response, next: NextFunction) => {
   try {
     const authHeader = req.headers.authorization
     // aqui estamos verificando que existe el header
@@ -30,10 +32,16 @@ export const requireAuth = (req: Request, res: Response, next: NextFunction): vo
     }
 
     // decodificamos el token y verificamos el cotneido dentro
+    // el metodo jwt.verify puede retonrnr un string o un jwtpaylod 
     const decoded = jwt.verify(token, jwtSecret)
 
-    req.user = decoded;
+    if (typeof decoded === "string") {
+      res.status(401).json({ message: "Invalid token format" })
+      return
 
+    }
+
+    (req as any).user = decoded as any
     next()
   } catch (error) {
     console.error("❌ Error verifying token:", error)

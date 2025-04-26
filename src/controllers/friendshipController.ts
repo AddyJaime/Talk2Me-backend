@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 import { Friendship } from "@models";
 import { User } from "@models";
-import { JwtPayload } from "jsonwebtoken";
+
+
 
 
 
@@ -11,8 +12,8 @@ export const sendFriendRequest = async (req: Request, res: Response) => {
     // aqui recibimos el email de la persona a la cual se le quiere enviar el friend request 
     const { email } = req.body
 
-    const payload = req.user as JwtPayload
-    const currentUserId = payload.id
+    const currentUserId = (req as any).user.id
+
 
     // Buscar al usuario por email y si el usuario no existe manda un error, evita mandar solicutuedes a usuario que no existan en la base de dato, tienen que exisiter para mandarle request
     const existingUser = await User.findOne({ where: { email } })
@@ -24,6 +25,7 @@ export const sendFriendRequest = async (req: Request, res: Response) => {
     // evitar enviar solicituedes a uno mismo
     if (existingUser.id === currentUserId) {
       res.status(400).json({ message: "You cannot add yourself" })
+      return
     }
 
     // buscar en la tabla de friendship una relacio nentre el usuario actual y ese a quien se le va a mandarla solitud y si existe esa relacion enotnces no se la envies 
@@ -59,8 +61,8 @@ export const sendFriendRequest = async (req: Request, res: Response) => {
 export const acceptFriendRequest = async (req: Request, res: Response) => {
   try {
 
-    const payload = req.user as JwtPayload
-    const currentUserId = payload.id
+    const currentUserId = (req as any).user.id
+
 
     const senderId = req.body.id
     const friendRequestExist = await Friendship.findOne({
@@ -74,6 +76,7 @@ export const acceptFriendRequest = async (req: Request, res: Response) => {
     })
     if (!friendRequestExist) {
       res.status(400).json({ message: "Friend request not found or already accepted." })
+      return
     }
 
     if (friendRequestExist) {
@@ -85,6 +88,7 @@ export const acceptFriendRequest = async (req: Request, res: Response) => {
     }
 
     res.status(200).json({ message: "friend request accepted succefullyt", friendRequest: friendRequestExist })
+    return
 
   } catch (error) {
     console.error("❌ Error accepting friend request:", error)
