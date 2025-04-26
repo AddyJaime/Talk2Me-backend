@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { Friendship } from "@models";
 import { User } from "@models";
+import { JwtPayload } from "jsonwebtoken";
 
 
 
@@ -9,8 +10,9 @@ export const sendFriendRequest = async (req: Request, res: Response) => {
 
     // aqui recibimos el email de la persona a la cual se le quiere enviar el friend request 
     const { email } = req.body
-    // aqui el id del usuario actual ya autenticado // agregar auth
-    const currentUserId = req.user.id
+
+
+    const currentUserId = (req.user as JwtPayload).id
 
     // Buscar al usuario por email y si el usuario no existe manda un error, evita mandar solicutuedes a usuario que no existan en la base de dato, tienen que exisiter para mandarle request
     const existingUser = await User.findOne({ where: { email } })
@@ -24,8 +26,9 @@ export const sendFriendRequest = async (req: Request, res: Response) => {
       res.status(400).json({ message: "You cannot add yourself" })
     }
 
-    // buscar en la tabla de friendship una relacio nentre el usuario actual y ese a wuien se le va a mandarla solitud y existe esa relacion enotnces no se la envies 
+    // buscar en la tabla de friendship una relacio nentre el usuario actual y ese a quien se le va a mandarla solitud y si existe esa relacion enotnces no se la envies 
     const alreadyExists = await Friendship.findOne({
+      // aqui esta la base de daro la tabla Friendship tiene userId y friendID 
       where: {
         userId: currentUserId,
         friendId: existingUser.id
@@ -55,7 +58,8 @@ export const sendFriendRequest = async (req: Request, res: Response) => {
 
 export const acceptFriendRequest = async (req: Request, res: Response) => {
   try {
-    const currentUserId = req.user.id
+
+    const currentUserId = (req.user as JwtPayload).id
     const senderId = req.body.id
 
     const friendRequestExist = await Friendship.findOne({
