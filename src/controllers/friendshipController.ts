@@ -11,8 +11,8 @@ export const sendFriendRequest = async (req: Request, res: Response) => {
     // aqui recibimos el email de la persona a la cual se le quiere enviar el friend request 
     const { email } = req.body
 
-
-    const currentUserId = (req.user as JwtPayload).id
+    const payload = req.user as JwtPayload
+    const currentUserId = payload.id
 
     // Buscar al usuario por email y si el usuario no existe manda un error, evita mandar solicutuedes a usuario que no existan en la base de dato, tienen que exisiter para mandarle request
     const existingUser = await User.findOne({ where: { email } })
@@ -59,9 +59,10 @@ export const sendFriendRequest = async (req: Request, res: Response) => {
 export const acceptFriendRequest = async (req: Request, res: Response) => {
   try {
 
-    const currentUserId = (req.user as JwtPayload).id
-    const senderId = req.body.id
+    const payload = req.user as JwtPayload
+    const currentUserId = payload.id
 
+    const senderId = req.body.id
     const friendRequestExist = await Friendship.findOne({
       where: {
         userId: senderId,

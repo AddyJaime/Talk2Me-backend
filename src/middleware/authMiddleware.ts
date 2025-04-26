@@ -2,19 +2,21 @@
 // later to do para asegurarno que el usaurio tiene un token valido y que tiene permisos para poder hacer lo que le de su gana dentro de la app
 import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
-export const requireAuth = (req: Request, res: Response, next: NextFunction) => {
+export const requireAuth = (req: Request, res: Response, next: NextFunction): void => {
   try {
     const authHeader = req.headers.authorization
     // aqui estamos verificando que existe el header
     if (!authHeader) {
-      return res.status(401).json({ message: "token not provided" })
+      res.status(401).json({ message: "token not provided" });
+      return;
     }
     // aqui removemos el bearer y solo nos quedamos con el token
     // aqui spit te da un array con dos cosas "bearer" y el token "dgdfggvfd" y solo tomas el token
     const token = authHeader.split(" ")[1]
     // verifivcamos que el token exista 
     if (!token) {
-      return res.status(401).json({ message: "token missing" })
+      res.status(401).json({ message: "token missing" })
+      return
 
     }
 
@@ -22,7 +24,8 @@ export const requireAuth = (req: Request, res: Response, next: NextFunction) => 
 
     if (!jwtSecret) {
       console.error("JWT_SECRET is not defined in env variable")
-      return res.status(501).json({ message: "internal server error" })
+      res.status(501).json({ message: "internal server error" })
+      return
 
     }
 
@@ -30,11 +33,12 @@ export const requireAuth = (req: Request, res: Response, next: NextFunction) => 
     const decoded = jwt.verify(token, jwtSecret)
 
     req.user = decoded;
+
     next()
   } catch (error) {
     console.error("❌ Error verifying token:", error)
-    return res.status(401).json({ message: "invalid token" })
-
+    res.status(401).json({ message: "invalid token" })
+    return
   }
 
 

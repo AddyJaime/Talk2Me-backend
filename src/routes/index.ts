@@ -1,3 +1,3 @@
-import authRoutes from "./authRoutes";
-
-export { authRoutes };
+import { authRoutes } from "./authRoutes";
+import { friendshipRoutes } from "./friendshipRoutes";
+export { authRoutes, friendshipRoutes };
