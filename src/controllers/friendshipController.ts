@@ -101,10 +101,15 @@ export const acceptFriendRequest = async (req: Request, res: Response) => {
 
 export const getFriendsList = async (req: Request, res: Response) => {
   try {
+    // este es el usuario actual ya validado 
+    // se pone en parentesis y a esto se le llama  precedecia de operadores primero convertimos req osea el objecto req a any y luego accedemos a user
+    // lo que pasa es que explicitame hay qyue decirle de que tipo es 
     const currentUserId = (req as any).user.id
+
+
     // aqui buscamos en la tabla friendship solo donde el estado sea aceptado
     // Y donde el usuario actual sea userId o friendId (porque pudo enviar o recibir la solicitud).
-    const friendships = Friendship.findAll({
+    const friendships = await Friendship.findAll({
       where: {
         status: "accepted",
         [Op.or]: [
@@ -117,12 +122,41 @@ export const getFriendsList = async (req: Request, res: Response) => {
           model: User,
           as: "sender",
           attributes: ["id", "name", "email"],
+        },
+        {
+          model: User,
+          as: "receiver",
+          attributes: ["id", "name", "email"],
         }
       ]
     })
 
-  } catch (error) {
 
+    const friends = friendships.map((friendship) => {
+      const sender = friendship.get("sender") as User
+      const receiver = friendship.get("receiver") as User
+
+      const isSender = sender.id === currentUserId
+      const friend = isSender ? receiver : sender
+
+      return {
+        id: friend.id,
+        name: friend.fullName,
+        email: friend.email
+      }
+
+
+
+    })
+
+
+    res.status(200).json({ friends })
+
+  } catch (error) {
+    console.error("❌ error getting friends list:", error)
+    res.status(500).json({ message: "Something went wrong retrieving friends." })
   }
 
 }
+
+// agregar la ruta de obtner amigos 
