@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { Friendship } from "@models";
 import { User } from "@models";
+import { Op } from "sequelize";
 
 
 
@@ -95,5 +96,33 @@ export const acceptFriendRequest = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Something went wrong while accepting the request." })
   }
 
+
+}
+
+export const getFriendsList = async (req: Request, res: Response) => {
+  try {
+    const currentUserId = (req as any).user.id
+    // aqui buscamos en la tabla friendship solo donde el estado sea aceptado
+    // Y donde el usuario actual sea userId o friendId (porque pudo enviar o recibir la solicitud).
+    const friendships = Friendship.findAll({
+      where: {
+        status: "accepted",
+        [Op.or]: [
+          { userId: currentUserId },
+          { friendId: currentUserId }
+        ],
+      },
+      include: [
+        {
+          model: User,
+          as: "sender",
+          attributes: ["id", "name", "email"],
+        }
+      ]
+    })
+
+  } catch (error) {
+
+  }
 
 }
