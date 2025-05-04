@@ -7,6 +7,7 @@ import sequelize from "@config/database";
 import "@models";
 import { authRoutes } from "@routes";
 import { friendshipRoutes } from "@routes";
+import { getFriendsList } from "@routes";
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(express.json());
 
 app.use("/auth", authRoutes);
 app.use("/friends", friendshipRoutes)
+app.use("/friends-list", getFriendsList)
 
 const startServer = async () => {
 	try {

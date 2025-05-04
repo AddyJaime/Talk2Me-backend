@@ -42,6 +42,7 @@ export const requireAuth = (req: Request, res: Response, next: NextFunction) => 
     }
 
     (req as any).user = decoded as any
+    console.log(req as any).user
     next()
   } catch (error) {
     console.error("❌ Error verifying token:", error)

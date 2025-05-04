@@ -18,7 +18,14 @@ router.post("/send-friend-request", requireAuth, validateSchema(friendshipSchema
 
 router.post("/accept-friend-request", requireAuth, validateSchema(acceptFriendshipSchema), acceptFriendRequest)
 
-router.get("/allFriends", requireAuth, validateSchema(getFriendsListSchema), getFriendsList)
+router.get("/all", requireAuth, validateSchema(getFriendsListSchema), getFriendsList)
 
 
 export const friendshipRoutes = router
+
+// // {
+//   "fullName": "jose",
+//   "email": "j@gmail.com",
+//   "password": "12345678"
+
+// }

@@ -1,3 +1,4 @@
 import { authRoutes } from "./authRoutes";
 import { friendshipRoutes } from "./friendshipRoutes";
-export { authRoutes, friendshipRoutes };
+import { getFriendsList } from "@src/controllers/friendshipController";
+export { authRoutes, friendshipRoutes, getFriendsList };

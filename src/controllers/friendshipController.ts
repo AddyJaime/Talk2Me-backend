@@ -172,4 +172,3 @@ export const getFriendsList = async (req: Request, res: Response) => {
 
 }
 
-// agregar la ruta de obtner amigos 
