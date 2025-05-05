@@ -43,7 +43,7 @@
       "@types/*": ["types/*"]
     },
     "typeRoots": ["./node_modules/@types", "./src/types"],
-    "types": ["bcryptjs"],
+
     /* Specify a set of entries that re-map imports to additional lookup locations. */ // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
     // "typeRoots": [],                                  /* Specify multiple folders that act like './node_modules/@types'. */
     // "types": [],                                      /* Specify type package names to be included without being referenced in a source file. */
@@ -120,7 +120,7 @@
 
     /* Completeness */
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
-    "skipLibCheck": true /* Skip type checking all .d.ts files. */
+    "skipLibCheck": false /* Skip type checking all .d.ts files. */
   },
 
   "include": ["src", "src/types"]
