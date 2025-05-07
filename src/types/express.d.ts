@@ -2,8 +2,8 @@ import { User } from "@src/models";
 import { JwtPayload } from "jsonwebtoken";
 
 
-interface Userpayload extends JwtPayload {
-  id: string,
+export interface Userpayload extends JwtPayload {
+  id: number,
   email: string
 }
 declare global {

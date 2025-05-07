@@ -106,7 +106,10 @@ export const getFriendsList = async (req: Request, res: Response) => {
     // lo que pasa es que explicitame hay qyue decirle de que tipo es 
     // any es como no te quejes yo se lo que tiene req 
     // Cállate y déjame programar! Sé que esto existe.
-    const currentUserId = (req as any).user.id
+
+
+
+    const currentUserId = req.user?.id
 
 
     // aqui buscamos en la tabla friendship solo donde el estado sea aceptado
