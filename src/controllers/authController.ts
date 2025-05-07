@@ -24,10 +24,10 @@ export const register = async (req: Request, res: Response) => {
 
     res
       .status(201)
-      .json({ message: "User created succeyfully", user: newUser });
+      .json({ message: "User created succefully", user: newUser });
   } catch (error) {
     console.error("❌ Error creating user:", error);
-    res.status(500).json({ error: "Error creating user" });
+    res.status(500).json({ error: "❌ Error creating user" });
   }
 };
 
