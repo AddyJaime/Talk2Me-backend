@@ -5,8 +5,6 @@ import { Op } from "sequelize";
 
 
 
-
-
 export const sendFriendRequest = async (req: Request, res: Response) => {
   try {
 
@@ -57,7 +55,6 @@ export const sendFriendRequest = async (req: Request, res: Response) => {
 
   }
 }
-
 
 export const acceptFriendRequest = async (req: Request, res: Response) => {
   try {
