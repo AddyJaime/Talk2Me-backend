@@ -98,31 +98,21 @@ export const acceptFriendRequest = async (req: Request, res: Response) => {
 
 export const getFriendsList = async (req: Request, res: Response) => {
   try {
-    // este es el usuario actual ya validado 
-    // se pone en parentesis y a esto se le llama  precedecia de operadores primero convertimos req osea el objecto req a any y luego accedemos a user
-    // lo que pasa es que explicitame hay qyue decirle de que tipo es 
-    // any es como no te quejes yo se lo que tiene req 
-    // Cállate y déjame programar! Sé que esto existe.
-
-
 
     const currentUserId = req.user?.id
 
 
-    // aqui buscamos en la tabla friendship solo donde el estado sea aceptado
-    // Y donde el usuario actual sea userId o friendId (porque pudo enviar o recibir la solicitud).
+
     const friendships = await Friendship.findAll({
-      // aqui es como un filtro de filtras solo los amigosa donde el status en la base de dato diga accepted 
       where: {
         status: "accepted",
-        // bidireccionales las amistades puedes enviar o puedes recivir 
-        // es un operador de sequilize el cual dice uno o el otro 
+
         [Op.or]: [
           { userId: currentUserId },
           { friendId: currentUserId }
         ],
       },
-      // include hace un join trae las tablas 
+
       include: [
         {
           model: User,
@@ -139,15 +129,13 @@ export const getFriendsList = async (req: Request, res: Response) => {
 
 
     const friends = friendships.map((friendship) => {
+      console.log(friends)
       const sender = friendship.get("sender") as User
       const receiver = friendship.get("receiver") as User
 
       let friend
-      // el usuario logueado fue quien envio la solicitud
       if (sender.id === currentUserId) {
-        // osea quien la recibio fue el amigo mio si yo soy verderadero
         friend = receiver
-        // si no fui yo que laq envio mi amigo fue que la envio 
       } else {
         friend = sender
       }

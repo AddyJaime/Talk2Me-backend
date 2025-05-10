@@ -22,12 +22,20 @@ Friendship.init({
   },
   userId: {
     type: DataTypes.INTEGER,
-    allowNull: false
+    allowNull: false,
+    references: {
+      model: "User",
+      key: "id"
+    }
   }
   ,
   friendId: {
     type: DataTypes.INTEGER,
-    allowNull: false
+    allowNull: false,
+    references: {
+      model: "User",
+      key: "id"
+    }
   },
   status: {
     type: DataTypes.STRING,
