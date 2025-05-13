@@ -24,7 +24,7 @@ Friendship.init({
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: "User",
+      model: "users",
       key: "id"
     }
   }
@@ -33,7 +33,7 @@ Friendship.init({
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: "User",
+      model: "users",
       key: "id"
     }
   },
@@ -54,5 +54,7 @@ Friendship.init({
 
   }
 )
+
+console.log("tabla creada exisotamenmre ")
 
 export default Friendship
