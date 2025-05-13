@@ -18,7 +18,7 @@ router.post("/send-friend-request", requireAuth, validateSchema(friendshipSchema
 
 router.post("/accept-friend-request", requireAuth, validateSchema(acceptFriendshipSchema), acceptFriendRequest)
 
-router.get("/all", requireAuth, validateSchema(getFriendsListSchema), getFriendsList)
+router.get("/list", requireAuth, validateSchema(getFriendsListSchema), getFriendsList)
 
 
 export const friendshipRoutes = router

@@ -9,5 +9,5 @@ const friendSchema = z.object({
 
 })
 
-const getFriendsListSchema = z.array(friendSchema)
+const getFriendsListSchema = friendSchema
 export default getFriendsListSchema

@@ -100,11 +100,11 @@ export const getFriendsList = async (req: Request, res: Response) => {
   try {
 
     const currentUserId = req.user?.id
-    console.log("user", currentUserId)
+    // console.log("user", currentUserId)
 
-    if (!currentUserId) {
-      throw new Error("user is undefine, check middleware")
-    }
+    // if (!currentUserId) {
+    //   throw new Error("user is undefine, check middleware")
+    // }
 
 
 

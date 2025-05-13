@@ -10,6 +10,7 @@ export const requireAuth = (req: Request, res: Response, next: NextFunction): vo
   try {
     const authHeader = req.headers.authorization
     // aqui estamos verificando que existe el header
+    console.log("✅ Verificando encabezado de autorización:", authHeader)
     if (!authHeader) {
       res.status(401).json({ message: "token not provided" });
       return;
@@ -17,6 +18,7 @@ export const requireAuth = (req: Request, res: Response, next: NextFunction): vo
     // aqui removemos el bearer y solo nos quedamos con el token
     // aqui spit te da un array con dos cosas "bearer" y el token "dgdfggvfd" y solo tomas el token
     const token = authHeader.split(" ")[1]
+    console.log("token recivido", token)
     // verifivcamos que el token exista 
     if (!token) {
       res.status(401).json({ message: "token missing" })
