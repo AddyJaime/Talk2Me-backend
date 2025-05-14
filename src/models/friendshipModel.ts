@@ -1,5 +1,6 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from "@config/index";
+import User from "./userModel";
 
 // Este modelo representa una relación de amistad entre dos usuarios
 // extienede de modelo porque asi Model le da acceso a sequilize a usar metodos como findOne, create,update 
@@ -24,7 +25,7 @@ Friendship.init({
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: "users",
+      model: User,
       key: "id"
     }
   }
@@ -33,7 +34,7 @@ Friendship.init({
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: "users",
+      model: User,
       key: "id"
     }
   },
