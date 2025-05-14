@@ -146,9 +146,9 @@ export const getFriendsList = async (req: Request, res: Response) => {
       }
 
       return {
-        id: friend.id,
-        name: friend.fullName,
-        email: friend.email
+        id: friend.id || 0,
+        fullName: friend?.fullName || "Unknown",
+        email: friend?.email || "No email"
       }
 
 

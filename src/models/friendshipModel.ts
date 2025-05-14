@@ -55,6 +55,6 @@ Friendship.init({
   }
 )
 
-console.log("tabla creada exisotamenmre ")
+
 
 export default Friendship
