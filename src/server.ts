@@ -11,7 +11,6 @@ import { friendshipRoutes } from "@routes";
 
 const app = express();
 
-// Para poder interpreter json
 app.use(express.json());
 
 app.use("/auth", authRoutes);

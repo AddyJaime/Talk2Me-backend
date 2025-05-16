@@ -1,5 +1,3 @@
-// Este archivo configura la conexión a la base de datos usando Sequelize.
-
 import { Sequelize } from "sequelize";
 import env from "./env";
 
