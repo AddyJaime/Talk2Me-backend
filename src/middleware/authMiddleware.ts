@@ -4,8 +4,7 @@ import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
 import { Userpayload } from "@src/types/express";
 
-// import { AuthRequest } from "@src/types/AuthRequest";
-// import { Request } from "express";
+
 export const requireAuth = (req: Request, res: Response, next: NextFunction): void => {
   try {
     const authHeader = req.headers.authorization
@@ -35,9 +34,6 @@ export const requireAuth = (req: Request, res: Response, next: NextFunction): vo
 
 
     }
-
-
-
     const decoded = jwt.verify(token, jwtSecret) as Userpayload
     if (typeof decoded === "string") {
       res.status(401).json({ message: "Invalid token format" })
