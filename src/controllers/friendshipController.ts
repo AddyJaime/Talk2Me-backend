@@ -10,6 +10,7 @@ export const sendFriendRequest = async (req: Request, res: Response) => {
 
     // aqui recibimos el email de la persona a la cual se le quiere enviar el friend request 
     const { email } = req.body
+    console.log("Email recevied", email)
 
     const currentUserId = (req as any).user.id
 
@@ -100,13 +101,10 @@ export const getFriendsList = async (req: Request, res: Response) => {
   try {
 
     const currentUserId = req.user?.id
-    // console.log("user", currentUserId)
 
-    // if (!currentUserId) {
-    //   throw new Error("user is undefine, check middleware")
-    // }
-
-
+    if (!currentUserId) {
+      return res.status(401).json({ message: "User not authenticated" })
+    }
 
     const friendships = await Friendship.findAll({
       where: {
@@ -122,45 +120,42 @@ export const getFriendsList = async (req: Request, res: Response) => {
         {
           model: User,
           as: "sender",
-          attributes: ["id", "name", "email"],
+          attributes: ["id", "fullName", "email"],
         },
         {
           model: User,
           as: "receiver",
-          attributes: ["id", "name", "email"],
+          attributes: ["id", "fullName", "email"],
         }
       ]
     })
 
 
     const friends = friendships.map((friendship) => {
-      console.log(friends)
-      const sender = friendship.get("sender") as User
-      const receiver = friendship.get("receiver") as User
+      const sender = friendship.get("sender") as User;
+      const receiver = friendship.get("receiver") as User;
 
-      let friend
-      if (sender.id === currentUserId) {
-        friend = receiver
+      let friend;
+      if (sender?.id === currentUserId) {
+        friend = receiver;
       } else {
-        friend = sender
+        friend = sender;
       }
+
 
       return {
-        id: friend.id || 0,
+        id: friend?.id || 0,
         fullName: friend?.fullName || "Unknown",
         email: friend?.email || "No email"
-      }
+      };
+    });
 
-
-
-    })
-
-
-    res.status(200).json({ friends })
+    return res.status(200).json({ friends })
 
   } catch (error) {
     console.error("❌ error getting friends list:", error)
-    res.status(500).json({ message: "Something went wrong retrieving friends." })
+    // si el usaurio esta undefine entonces el catch lo agarra 
+    return res.status(500).json({ message: "Something went wrong retrieving friends." })
   }
 
 }

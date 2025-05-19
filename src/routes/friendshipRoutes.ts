@@ -23,9 +23,3 @@ router.get("/list", requireAuth, validateSchema(getFriendsListSchema), getFriend
 
 export const friendshipRoutes = router
 
-// // {
-//   "fullName": "jose",
-//   "email": "j@gmail.com",
-//   "password": "12345678"
-
-// }
