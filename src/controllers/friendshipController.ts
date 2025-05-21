@@ -99,11 +99,12 @@ export const acceptFriendRequest = async (req: Request, res: Response) => {
 
 export const getFriendsList = async (req: Request, res: Response) => {
   try {
-
+    // return = Esto devuelve algo a la función que lo llama (TypeScript).
     const currentUserId = req.user?.id
 
     if (!currentUserId) {
-      return res.status(401).json({ message: "User not authenticated" })
+      res.status(401).json({ message: "User not authenticated" })
+      return
     }
 
     const friendships = await Friendship.findAll({
@@ -130,6 +131,12 @@ export const getFriendsList = async (req: Request, res: Response) => {
       ]
     })
 
+    //     Cuando usas return en una función, significa que estás devolviendo algo a la función que te llamó.
+    // Pero en Express, no necesitas devolver (return) la respuesta (res.status(...).json(...)) porque el propósito de esa función es simplemente enviar la respuesta al cliente (navegador).
+    //     Porque en Express, tu función de controlador (getFriendsList) no está diseñada para devolver un valor a otra función.
+    // Está diseñada para enviar una respuesta directamente al cliente (navegador, app móvil, etc.).
+
+
 
     const friends = friendships.map((friendship) => {
       const sender = friendship.get("sender") as User;
@@ -150,12 +157,14 @@ export const getFriendsList = async (req: Request, res: Response) => {
       };
     });
 
-    return res.status(200).json({ friends })
+    res.status(200).json({ friends })
+    return
 
   } catch (error) {
     console.error("❌ error getting friends list:", error)
     // si el usaurio esta undefine entonces el catch lo agarra 
-    return res.status(500).json({ message: "Something went wrong retrieving friends." })
+    res.status(500).json({ message: "Something went wrong retrieving friends." })
+    return
   }
 
 }
