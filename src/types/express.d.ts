@@ -1,11 +1,13 @@
 import { User } from "@src/models";
 import { JwtPayload } from "jsonwebtoken";
 
+// Para decirle a TS qué tiene tu token
 
 export interface Userpayload extends JwtPayload {
   id: number,
-  email: string
+
 }
+// para decrile a typscripqe que req.user si exsite 
 declare global {
   namespace Express {
     interface Request {
