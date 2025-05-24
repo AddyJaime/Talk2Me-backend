@@ -1,20 +1,16 @@
 import User from "./userModel";
-import Friendship from "./friendshipModel";
 import Conversation from "./conversationModel";
+import MessageModel from "./messageModel";
 
-User.hasMany(Friendship, { foreignKey: "userId", as: 'sentRequests' })
-User.hasMany(Friendship, { foreignKey: 'friendId', as: "receivedRequests" })
-Friendship.belongsTo(User, { foreignKey: "userId", as: 'sender' })
-Friendship.belongsTo(User, { foreignKey: 'friendId', as: 'receiver' })
-
+// Conversation Relationship
 Conversation.belongsTo(User, {
   foreignKey: "senderId",
-  as: "sender",
+  as: "initiator",
 })
 
 Conversation.belongsTo(User, {
   foreignKey: "receiverId",
-  as: "receiver",
+  as: "participant",
 })
 
 User.hasMany(Conversation, {
@@ -27,7 +23,14 @@ User.hasMany(Conversation, {
   as: "receivedConversations",
 })
 
+// Message
+MessageModel.belongsTo(Conversation)
+Conversation.hasMany(MessageModel)
+
+MessageModel.belongsTo(User, { foreignKey: "senderId", as: "sender" })
+MessageModel.belongsTo(User, { foreignKey: "receiverId", as: "receiver" })
 
 
 
-export { User, Friendship, Conversation };
+
+export { User, Conversation };
