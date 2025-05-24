@@ -2,8 +2,7 @@ import { DataTypes, Model } from "sequelize";
 import { sequelize } from "@config/index";
 import User from "./userModel";
 
-// Este modelo representa una relación de amistad entre dos usuarios
-// extienede de modelo porque asi Model le da acceso a sequilize a usar metodos como findOne, create,update 
+
 
 class Friendship extends Model {
   public id!: number;
@@ -14,7 +13,7 @@ class Friendship extends Model {
   public readonly updatedAt!: Date
 }
 
-// aqui estamos connectando el modelo con la base de dato, aqui estamos definiendo las columan de la base de dato 
+
 Friendship.init({
   id: {
     type: DataTypes.INTEGER,

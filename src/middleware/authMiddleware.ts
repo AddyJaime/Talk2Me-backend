@@ -1,5 +1,3 @@
-// ✅ Aquí verificamos si el usuario está autenticado con un token JWT.
-// later to do para asegurarno que el usaurio tiene un token valido y que tiene permisos para poder hacer lo que le de su gana dentro de la app
 import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
 import { Userpayload } from "@src/types/express";
@@ -8,17 +6,14 @@ import { Userpayload } from "@src/types/express";
 export const requireAuth = (req: Request, res: Response, next: NextFunction): void => {
   try {
     const authHeader = req.headers.authorization
-    // aqui estamos verificando que existe el header
-    console.log("✅ Verificando encabezado de autorización:", authHeader)
+    console.log(authHeader)
     if (!authHeader) {
       res.status(401).json({ message: "token not provided" });
       return;
     }
-    // aqui removemos el bearer y solo nos quedamos con el token
-    // aqui spit te da un array con dos cosas "bearer" y el token "dgdfggvfd" y solo tomas el token
+
     const token = authHeader.split(" ")[1]
     console.log("token recivido", token)
-    // verifivcamos que el token exista 
     if (!token) {
       res.status(401).json({ message: "token missing" })
       return
@@ -54,4 +49,3 @@ export const requireAuth = (req: Request, res: Response, next: NextFunction): vo
 }
 
 
-// el front end debe ahora enviar para el backend el token en el header 

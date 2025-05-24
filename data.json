@@ -1,0 +1,42 @@
+[
+  {
+    "id": 2,
+    "fullName": "Milo little",
+    "email": "milolittle@gmail.com",
+    "password": "12345678",
+    "createdAt": "2025-03-20T22:29:13.189Z",
+    "updatedAt": "2025-03-20T22:29:13.189Z"
+  },
+  {
+    "id": 3,
+    "fullName": "Stella little",
+    "email": "slittle@gmail.com",
+    "password": "$2b$10$lHV8WICCENs43TccVAOCJ.KGhP9aUgOOEdpIY25nkbimOzahf.iw.",
+    "createdAt": "2025-03-22T16:44:15.418Z",
+    "updatedAt": "2025-03-22T16:44:15.418Z"
+  },
+  {
+    "id": 4,
+    "fullName": "Elon Musk",
+    "email": "emusk@gmail.com",
+    "password": "$2b$10$r1Jqxkew.pZztB3370IgMe3B3LiPPX2UNwSyVgrSHIGo3.MyxSQGi",
+    "createdAt": "2025-03-22T16:50:58.011Z",
+    "updatedAt": "2025-03-22T16:50:58.011Z"
+  },
+  {
+    "id": 5,
+    "fullName": "Milo little ",
+    "email": "Milolittle@gmail.com",
+    "password": "$2b$10$C/Wqjt3osWEaTo0HPh2uFOShnVevDSI9OhjPRJmKuc1jDft.BO82m",
+    "createdAt": "2025-03-25T23:41:18.599Z",
+    "updatedAt": "2025-03-25T23:41:18.599Z"
+  },
+  {
+    "id": 9,
+    "fullName": "Milo martinez",
+    "email": "Milo2@gmail.com",
+    "password": "$2b$10$dJXJf0Lx2i0ksvNUajbFX.adJ0vnte/PhJqv2rWigUsxbvVvkL3ym",
+    "createdAt": "2025-03-30T19:13:28.525Z",
+    "updatedAt": "2025-03-30T19:13:28.525Z"
+  }
+]

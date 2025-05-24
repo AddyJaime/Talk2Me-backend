@@ -1,12 +1,8 @@
 import "dotenv/config";
 import express from "express";
 import sequelize from "@config/database";
-// importar con @ aunque en ts conf este el index 
-// el alias en ts conf viene siendo model no index 
-// si quiero acceder a todo los archis dentro de models entonces voy a tener que hacer algo como esto en ts config models/*
-import "@models";
 import { authRoutes } from "@routes";
-import { friendshipRoutes } from "@routes";
+import { conversationRoutes } from "@routes";
 
 
 const app = express();
@@ -14,7 +10,7 @@ const app = express();
 app.use(express.json());
 
 app.use("/auth", authRoutes);
-app.use("/friends", friendshipRoutes)
+app.use("/conversations", conversationRoutes)
 
 
 const startServer = async () => {

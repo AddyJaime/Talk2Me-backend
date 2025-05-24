@@ -1,7 +1,6 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from "@config/index";
-// extienede de modelo porque asi Model le da acceso a sequilize a usar metodos como findOne, create,update 
-// esta clase solo se utliza con typscript
+
 class User extends Model {
   public id!: number;
   public fullName!: string;

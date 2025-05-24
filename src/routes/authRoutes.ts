@@ -5,7 +5,6 @@ import { registerSchema, loginSchema } from "Schemas";
 import { login } from "@controllers/authController";
 import { register } from "@controllers/authController";
 
-// missing controlers here now
 
 const router: Router = express.Router();
 
