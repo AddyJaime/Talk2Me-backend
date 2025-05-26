@@ -31,6 +31,33 @@ export class ConversationsController {
 		}
 	}
 
+	static getConversationById = async (req: Request, res: Response) => {
+		try {
+			const conversations = await Conversation.findOne({
+				where: { id: req.params.id },
+				include: [
+					{
+						model: MessageModel,
+						as: "messages",
+						limit: 1,
+						order: [['createdAt', 'DESC']]
+					},
+					{
+						model: User,
+						as: "participant",
+						attributes: {
+							exclude: ["password", "createdAt", "updatedAt"]
+						}
+					}
+				]
+			})
+			res.json(conversations)
+
+		} catch (error) {
+			console.log({ UserConversations: error });
+		}
+	}
+
 	static createConversation = async (req: Request, res: Response) => {
 		const { senderId, receiverId } = req.body
 		const include = [
