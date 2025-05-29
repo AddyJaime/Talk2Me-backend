@@ -8,6 +8,7 @@ export class ConversationsController {
 	static userConversations = async (_: Request, res: Response) => {
 		try {
 			const conversations = await Conversation.findAll({
+				// aqui buscca en la base de dato el modelo de message osea traime el modelo de message y por iguaal traime el modelo de user y su informacion
 				include: [
 					{
 						model: MessageModel,

@@ -3,13 +3,13 @@ import express from "express";
 import sequelize from "@config/database";
 import { authRoutes } from "@routes";
 import { conversationRoutes } from "@routes";
-import { createServer } from "http";
-import { Server } from "socket.io";
-import { sockerConversation } from "./ws/conversationWebSocket";
+// import { createServer } from "http";
+// import { Server } from "socket.io";
+// import { sockerConversation } from "./ws/conversationWebSocket";
 
 const app = express();
-const httpServer = createServer(app);
-const io = new Server(httpServer);
+// const httpServer = createServer(app);
+// const io = new Server(httpServer);
 
 app.use(express.json());
 app.use("/auth", authRoutes);
@@ -25,18 +25,18 @@ const startServer = async () => {
 		console.log(" ✅  Models synced");
 
 
-		io.on("connection", (socket) => {
-			console.log("user connected", socket.id);
-			sockerConversation(io, socket)
+		// io.on("connection", (socket) => {
+		// 	console.log("user connected", socket.id);
+		// 	sockerConversation(io, socket)
 
 
-			socket.on("desconect", () => {
-				console.log("user connected", socket.id);
-			})
-		});
+		// 	socket.on("desconect", () => {
+		// 		console.log("user connected", socket.id);
+		// 	})
+
 
 		const PORT = process.env.PORT || 3000;
-		httpServer.listen(PORT, () =>
+		app.listen(PORT, () =>
 			console.log(`🚀 Server running in  http://localhost:${PORT}`)
 		);
 	} catch (error) {
