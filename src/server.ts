@@ -3,11 +3,15 @@ import express from "express";
 import sequelize from "@config/database";
 import { authRoutes } from "@routes";
 import { conversationRoutes } from "@routes";
+
+
+
 // import { createServer } from "http";
 // import { Server } from "socket.io";
 // import { sockerConversation } from "./ws/conversationWebSocket";
 
 const app = express();
+
 // const httpServer = createServer(app);
 // const io = new Server(httpServer);
 
@@ -35,13 +39,16 @@ const startServer = async () => {
 		// 	})
 
 
-		const PORT = process.env.PORT || 3000;
-		app.listen(PORT, () =>
-			console.log(`🚀 Server running in  http://localhost:${PORT}`)
+		const PORT = Number(process.env.PORT || 3000)
+
+		app.listen(PORT, '0.0.0.0', () =>
+			console.log(`🚀 Server running on http://0.0.0.0:${PORT}`)
 		);
+
 	} catch (error) {
 		console.log("❌ Error connecting to the database", error);
 	}
 };
 
 startServer();
+
