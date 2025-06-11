@@ -3,6 +3,7 @@ import express from "express";
 import sequelize from "@config/database";
 import { authRoutes } from "@routes";
 import { conversationRoutes } from "@routes";
+import { userRoutes } from "./routes/userRoutes";
 
 
 
@@ -18,6 +19,7 @@ const app = express();
 app.use(express.json());
 app.use("/auth", authRoutes);
 app.use("/conversations", conversationRoutes)
+app.use("/users", userRoutes)
 
 
 const startServer = async () => {
@@ -39,12 +41,10 @@ const startServer = async () => {
 		// 	})
 
 
-		const PORT = Number(process.env.PORT || 3000)
-
-		app.listen(PORT, '0.0.0.0', () =>
-			console.log(`🚀 Server running on http://0.0.0.0:${PORT}`)
+		const PORT = process.env.PORT || 3000;
+		app.listen(PORT, () =>
+			console.log(`🚀 Server running in  http://localhost:${PORT}`)
 		);
-
 	} catch (error) {
 		console.log("❌ Error connecting to the database", error);
 	}
