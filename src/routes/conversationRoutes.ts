@@ -1,13 +1,13 @@
 import express, { Router } from "express";
-import { ConversationsController } from "@src/controllers/conversationController";
+import { userConversations, getConversationById, createConversation, createMessage } from "@src/controllers/conversationController";
 
 
 const router: Router = express.Router()
 
-router.get("/", ConversationsController.userConversations)
-router.get("/:id", ConversationsController.userConversations)
-router.post("/", ConversationsController.createConversation)
-router.post("/newMessage", ConversationsController.createMessage)
+router.get("/", userConversations)
+router.get("/:id", getConversationById)
+router.post("/", createConversation)
+router.post("/newMessage", createMessage)
 
 
 export const conversationRoutes = router
