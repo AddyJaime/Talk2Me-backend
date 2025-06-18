@@ -38,8 +38,8 @@ export const getConversationById = async (req: Request, res: Response) => {
 				{
 					model: MessageModel,
 					as: "messages",
-					limit: 1,
-					order: [['createdAt', 'DESC']]
+					limit: 100,
+					order: [['createdAt', 'ASC']]
 				},
 				{
 					model: User,
