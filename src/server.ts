@@ -4,17 +4,31 @@ import sequelize from "@config/database";
 import { authRoutes } from "@routes";
 import { conversationRoutes } from "@routes";
 import { userRoutes } from "./routes/userRoutes";
-
-
-
-// import { createServer } from "http";
-// import { Server } from "socket.io";
-// import { sockerConversation } from "./ws/conversationWebSocket";
+import { Server } from "socket.io";
+import http from "http"
 
 const app = express();
+const server = http.createServer(app)
+const io = new Server(server, {
+	cors: {
+		origin: '*',
+		methods: ['GET', 'POST'],
+	}
 
-// const httpServer = createServer(app);
-// const io = new Server(httpServer);
+})
+
+io.on('connection', (socket) => {
+	console.log(`User connected: ${socket.id}`)
+
+	socket.on('New_Message', (message) => {
+		io.emit('receive_message', message)
+	})
+	socket.on('disconnect', () => {
+		console.log(`User disconnected: ${socket.id}`)
+	})
+})
+
+
 
 app.use(express.json());
 app.use("/auth", authRoutes);
@@ -31,18 +45,10 @@ const startServer = async () => {
 		console.log(" ✅  Models synced");
 
 
-		// io.on("connection", (socket) => {
-		// 	console.log("user connected", socket.id);
-		// 	sockerConversation(io, socket)
-
-
-		// 	socket.on("desconect", () => {
-		// 		console.log("user connected", socket.id);
-		// 	})
 
 
 		const PORT = process.env.PORT || 3000;
-		app.listen(PORT, () =>
+		server.listen(PORT, () =>
 			console.log(`🚀 Server running in  http://localhost:${PORT}`)
 		);
 	} catch (error) {
