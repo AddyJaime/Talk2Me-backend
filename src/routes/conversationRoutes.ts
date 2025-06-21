@@ -1,7 +1,6 @@
 import express, { Router } from "express";
 import { userConversations, getConversationById, createConversation, createMessage } from "@src/controllers/conversationController";
 
-
 const router: Router = express.Router()
 
 router.get("/", userConversations)

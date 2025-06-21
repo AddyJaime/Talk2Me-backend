@@ -5,10 +5,11 @@ import { authRoutes } from "@routes";
 import { conversationRoutes } from "@routes";
 import { userRoutes } from "./routes/userRoutes";
 import { Server } from "socket.io";
-import http from "http"
+import { createServer } from "http";
 
 const app = express();
-const server = http.createServer(app)
+const server = createServer(app)
+
 const io = new Server(server, {
 	cors: {
 		origin: '*',
@@ -16,6 +17,13 @@ const io = new Server(server, {
 	}
 
 })
+
+
+// check thiss out later enum
+// enum SOCKET_EVENT  {
+// 	NEW_MESSAGE = "new_Message"
+// }
+// SOCKET_EVENT.NEW_MESSAGE
 
 io.on('connection', (socket) => {
 	console.log(`User connected: ${socket.id}`)

@@ -30,6 +30,7 @@ export const userConversations = async (_: Request, res: Response) => {
 	}
 }
 
+
 export const getConversationById = async (req: Request, res: Response) => {
 	try {
 		const conversations = await Conversation.findOne({
