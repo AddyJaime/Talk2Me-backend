@@ -2,7 +2,7 @@ import User from "./userModel";
 import Conversation from "./conversationModel";
 import MessageModel from "./messageModel";
 
-// Conversation Relationship
+
 Conversation.belongsTo(User, {
   foreignKey: "senderId",
   as: "initiator",
@@ -23,7 +23,7 @@ User.hasMany(Conversation, {
   as: "receivedConversations",
 })
 
-// Message
+
 MessageModel.belongsTo(Conversation)
 Conversation.hasMany(MessageModel)
 
