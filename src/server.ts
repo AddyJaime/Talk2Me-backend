@@ -10,20 +10,13 @@ import { createServer } from "http";
 const app = express();
 const server = createServer(app)
 
-const io = new Server(server, {
-	cors: {
-		origin: '*',
-		methods: ['GET', 'POST'],
-	}
 
-})
+let corsOptions = {
+	origin: '*',
+	methods: ['GET', 'POST'],
+}
+const io = new Server(server, { cors: corsOptions })
 
-
-// check thiss out later enum
-// enum SOCKET_EVENT  {
-// 	NEW_MESSAGE = "new_Message"
-// }
-// SOCKET_EVENT.NEW_MESSAGE
 
 io.on('connection', (socket) => {
 	console.log(`User connected: ${socket.id}`)
@@ -51,9 +44,6 @@ const startServer = async () => {
 
 		await sequelize.sync({ force: false });
 		console.log(" ✅  Models synced");
-
-
-
 
 		const PORT = process.env.PORT || 3000;
 		server.listen(PORT, () =>
