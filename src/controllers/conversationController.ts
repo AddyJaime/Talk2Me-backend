@@ -4,9 +4,15 @@ import { Request, Response } from "express"
 import { Op } from "sequelize";
 
 
-export const userConversations = async (_: Request, res: Response) => {
+export const userConversations = async (req: Request, res: Response) => {
 	try {
 		const Conversations = await Conversation.findAll({
+			where: {
+				[Op.or]: [
+					{ receiverId: req.params.id },
+					{ senderId: req.params.id },
+				]
+			},
 			include: [
 				{
 					model: MessageModel,
@@ -62,6 +68,11 @@ export const createConversation = async (req: Request, res: Response) => {
 	const { senderId, receiverId } = req.body
 	const include = [
 		{
+			model: MessageModel,
+			as: "messages",
+			limit: 100
+		},
+		{
 			model: User,
 			as: "initiator",
 			attributes: {
@@ -96,6 +107,9 @@ export const createConversation = async (req: Request, res: Response) => {
 			]
 		}
 	})
+
+	console.log(JSON.stringify({ existingConversation }, null, 2));
+
 
 	if (existingConversation)
 		res.json(existingConversation)

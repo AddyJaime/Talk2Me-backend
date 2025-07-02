@@ -4,6 +4,7 @@ import { userConversations, getConversationById, createConversation, createMessa
 const router: Router = express.Router()
 
 router.get("/", userConversations)
+router.get("/user/:id", userConversations)
 router.get("/:id", getConversationById)
 router.post("/", createConversation)
 router.post("/newMessage", createMessage)
