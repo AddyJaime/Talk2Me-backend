@@ -36,7 +36,6 @@ export const userConversations = async (req: Request, res: Response) => {
 	}
 }
 
-
 export const getConversationById = async (req: Request, res: Response) => {
 	try {
 		const conversations = await Conversation.findOne({
