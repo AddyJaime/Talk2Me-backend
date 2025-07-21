@@ -2,8 +2,6 @@ import { User } from "@src/models";
 import { Request, Response } from "express";
 import { Op } from "sequelize";
 
-
-
 export const getAllUsers = async (req: Request, res: Response) => {
 
   try {
