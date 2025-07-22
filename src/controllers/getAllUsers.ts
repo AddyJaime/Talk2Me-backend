@@ -3,7 +3,6 @@ import { Request, Response } from "express";
 import { Op } from "sequelize";
 
 export const getAllUsers = async (req: Request, res: Response) => {
-
   try {
     const { value, userId } = req.query
     const users = await User.findAll({
