@@ -10,13 +10,11 @@ import { createServer } from "http";
 const app = express();
 const server = createServer(app)
 
-
 let corsOptions = {
 	origin: '*',
 	methods: ['GET', 'POST'],
 }
 const io = new Server(server, { cors: corsOptions })
-
 
 io.on('connection', (socket) => {
 	console.log(`User connected: ${socket.id}`)
