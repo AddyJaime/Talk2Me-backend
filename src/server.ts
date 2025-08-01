@@ -20,10 +20,10 @@ io.on('connection', (socket) => {
 	console.log(`User connected: ${socket.id}`)
 
 	socket.on('New_Message', (message) => {
-		io.emit('receive_message', message)
+		io.emit('Receive_message', message)
 	})
 	socket.on('disconnect', () => {
-		console.log(`User disconnected: ${socket.id}`)
+		console.log(`user disconnected: ${socket.id}`)
 	})
 })
 
