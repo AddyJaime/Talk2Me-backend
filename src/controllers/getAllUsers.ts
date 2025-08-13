@@ -17,7 +17,6 @@ export const getAllUsers = async (req: Request, res: Response) => {
         exclude: ["email", "password", "createdAt", "updatedAt"]
       }
     })
-
     res.json(users)
   } catch (error) {
     console.log({ getAllUsers: error })
